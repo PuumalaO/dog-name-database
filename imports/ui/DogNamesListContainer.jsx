@@ -8,7 +8,7 @@ const DogNamesListContainer = withTracker(({searchTerm})=>{
     Meteor.subscribe('dogNames');
     var searchTermProp = searchTerm.toUpperCase()
     if(searchTerm === "" || searchTerm === undefined){
-        var query = DogNames.find({}).fetch()
+        var query = DogNames.find({},{sort:{name: 1}}).fetch()
     }
     else{
         var query = DogNames.find({name:{$regex: searchTermProp}}).fetch()
