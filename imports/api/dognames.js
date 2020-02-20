@@ -13,9 +13,12 @@ if(Meteor.isServer){
 Meteor.methods({
     'dognames.insert'(name){
         check(name, String);
-        const nameToSend = name.toUpperCase()
+        const nameToSend = name.toUpperCase().trim()
         var exists = DogNames.find({name: nameToSend}).fetch()
-        if(Object.keys(exists).length === 0){
+        if(nameToSend === ""){
+            throw new Meteor.Error("no-name-given", "No name was given")
+        }
+        else if(Object.keys(exists).length === 0){
             DogNames.insert({
                 name: nameToSend
             });
